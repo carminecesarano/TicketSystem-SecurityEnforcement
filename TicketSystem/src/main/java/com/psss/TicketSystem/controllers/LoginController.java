@@ -15,7 +15,7 @@ public class LoginController {
 	public String index() {
 		return "redirect:/login-panel/login";
 	}
-	
+
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login(
 		@RequestParam(value="error", required = false) String error,
@@ -30,7 +30,6 @@ public class LoginController {
 		}
 		return "login.index";
 	}
-	
 	
 	@RequestMapping(value="accessDenied", method = RequestMethod.GET)
 	public String accessDenied(Authentication authentication, ModelMap modelMap) {

@@ -20,7 +20,7 @@
     <section class="content">
       
       
-      <sec:authorize access="hasRole('ROLE_CLIENTE')">
+      <sec:authorize access="hasAuthority('ROLE_CLIENTI')">
       		<div class="row">
 		        
 		        <!-- ./col -->
@@ -41,7 +41,7 @@
 	      </div>
       </sec:authorize>
       
-      <sec:authorize access="hasRole('ROLE_OPERATORE')">
+      <sec:authorize access="hasAuthority('ROLE_OPERATORI')">
    		<div class="row">
 	        
 	        <!-- ./col -->

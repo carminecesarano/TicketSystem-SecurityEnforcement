@@ -32,8 +32,8 @@ public class DashboardController {
 	
 	public void getNotifiche(ModelMap modelMap, Utente account) {
 		
-		if (account.getRuolo().getName().equals("ROLE_CLIENTE")) {
-			List<Ticket> tickets = ticketService.cercaTicketCliente(account.getUsername());		
+		if (account.getRuolo().getName().equals("ROLE_CLIENTI")) {
+			List<Ticket> tickets = ticketService.cercaAllTicketCliente(account.getUsername());		
 			List<Notifica> notifiche = new ArrayList<Notifica>();
 			
 			for (int i = 0; i < tickets.size(); i++) {
@@ -45,8 +45,9 @@ public class DashboardController {
 	
 	@RequestMapping(value= {"","index"}, method=RequestMethod.GET)
 	public String index(Authentication authentication, ModelMap modelMap) {
+		
 		Utente account = accountService.findByUsername(authentication.getName());
-		int size_cliente = ticketService.cercaTicketCliente(account.getUsername()).size();
+		int size_cliente = ticketService.cercaAllTicketCliente(account.getUsername()).size();
 		int size_operatore = ticketService.cercaTicketOperatore(account.getUsername()).size();
 		int size_aperti = ticketService.cercaTicketStatoAperto().size();
 		

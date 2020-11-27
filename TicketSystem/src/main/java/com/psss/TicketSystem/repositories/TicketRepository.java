@@ -13,7 +13,10 @@ import com.psss.TicketSystem.entities.Ticket;
 public interface TicketRepository extends CrudRepository<Ticket, Integer>{
 
 	@Query("from Ticket where cliente_id = :id order by status")
-	public List<Ticket> cercaTicketCliente(@Param("id") int id);
+	public List<Ticket> cercaAllTicketCliente(@Param("id") int id);
+	
+	@Query("from Ticket where cliente_id = :idCliente and id = :idTicket order by status")
+	public Ticket cercaTicketCliente(@Param("idCliente") int idCliente, @Param("idTicket") int idTicket);
 	
 	@Query("from Ticket where operatore_id = :id order by status")
 	public List<Ticket> cercaTicketOperatore(@Param("id") int id);

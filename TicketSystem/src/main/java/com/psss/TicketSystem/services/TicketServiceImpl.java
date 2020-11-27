@@ -27,9 +27,15 @@ public class TicketServiceImpl implements TicketService{
 	}
 	
 	@Override
-	public List<Ticket> cercaTicketCliente(String username) {
+	public List<Ticket> cercaAllTicketCliente(String username) {
 		Utente account = accountRepository.findByUsername(username);
-		return ticketRepository.cercaTicketCliente(account.getId());
+		return ticketRepository.cercaAllTicketCliente(account.getId());
+	}
+	
+	@Override
+	public Ticket cercaTicketCliente(String username, int idTicket) {
+		Utente account = accountRepository.findByUsername(username);
+		return ticketRepository.cercaTicketCliente(account.getId(), idTicket);
 	}
 	
 	@Override

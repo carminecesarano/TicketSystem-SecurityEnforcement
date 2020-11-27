@@ -1,11 +1,9 @@
 package com.psss.TicketSystem.services;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import com.psss.TicketSystem.entities.Utente;
 
 
-public interface UtenteService extends UserDetailsService {
+public interface UtenteService {
 	
 	public Iterable<Utente> findAll();
 	

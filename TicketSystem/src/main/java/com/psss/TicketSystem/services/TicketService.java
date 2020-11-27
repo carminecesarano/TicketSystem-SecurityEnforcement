@@ -9,7 +9,9 @@ public interface TicketService {
 	
 	public Ticket save(Ticket ticket);
 		
-	public List<Ticket> cercaTicketCliente(String username);
+	public List<Ticket> cercaAllTicketCliente(String username);
+	
+	public Ticket cercaTicketCliente(String username, int idTicket);
 	
 	public List<Ticket> cercaTicketOperatore(String username);
 	

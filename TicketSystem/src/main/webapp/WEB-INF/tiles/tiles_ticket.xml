@@ -16,5 +16,10 @@
 		<definition name="ticket.details" extends="my_template">
 			<put-attribute name="content" value="/WEB-INF/views/ticket/details.jsp"></put-attribute>
 		</definition>
+		
+		<definition name="ticket.denied" extends="my_template">
+			<put-attribute name="content" value="/WEB-INF/views/login/accessDenied.jsp"></put-attribute>
+		</definition>
+		
 	</tiles-definitions>
 	

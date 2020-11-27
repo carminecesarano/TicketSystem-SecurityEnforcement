@@ -45,7 +45,7 @@ public class TicketController implements ServletContextAware{
 	
 	public void getNotifiche(ModelMap modelMap, Utente account) {
 		if (account.getRuolo().getName().equals("ROLE_CLIENTE")) {
-			List<Ticket> tickets = ticketService.cercaTicketCliente(account.getUsername());		
+			List<Ticket> tickets = ticketService.cercaAllTicketCliente(account.getUsername());		
 			List<Notifica> notifiche = new ArrayList<Notifica>();
 			
 			for (int i = 0; i < tickets.size(); i++) {
@@ -100,7 +100,7 @@ public class TicketController implements ServletContextAware{
 	@RequestMapping(value= "history_cliente", method=RequestMethod.GET)
 	public String history_cliente(Authentication authentication, ModelMap modelMap) {
 		Utente cliente = utenteService.findByUsername(authentication.getName());
-		List<Ticket> tickets = ticketService.cercaTicketCliente(cliente.getUsername());		// Tutti i ticket del cliente
+		List<Ticket> tickets = ticketService.cercaAllTicketCliente(cliente.getUsername());		// Tutti i ticket del cliente
 		
 		modelMap.put("tickets", tickets);
 		modelMap.put("account", cliente);
@@ -118,13 +118,20 @@ public class TicketController implements ServletContextAware{
 	
 	@RequestMapping(value= "details/{id}", method=RequestMethod.GET)
 	public String details(@PathVariable("id") int id, ModelMap modelMap, Authentication authentication) {
-		Utente account = utenteService.findByUsername(authentication.getName());
-		Ticket ticket = ticketService.findTicket(id);
 		
-		modelMap.put("ticket", ticket);
-		modelMap.put("account", account);
-		getNotifiche(modelMap, account);
-		return "ticket.details";
+		Utente account = utenteService.findByUsername(authentication.getName());
+		Ticket ticket = ticketService.cercaTicketCliente(account.getUsername(), id);				
+		
+		if(ticket != null) {
+			modelMap.put("ticket", ticket);
+			modelMap.put("account", account);
+			getNotifiche(modelMap, account);
+			return "ticket.details";
+		}
+		else {
+		//	return "redirect:/login-panel/accessDenied";
+			return "ticket.denied";
+		}
 	}
 	
 	@RequestMapping(value= "aggiorna_stato/{id}")
@@ -132,7 +139,6 @@ public class TicketController implements ServletContextAware{
 		try {
 			Utente operatore = utenteService.findByUsername(authentication.getName());
 			Ticket ticket = ticketService.findTicket(id);
-			
 			
 			switch (ticket.getStatoTicket().getId()) {
 				case 1 :

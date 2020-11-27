@@ -24,7 +24,7 @@
 	</div>
 </c:if>
 
-<sec:authorize access="hasRole('ROLE_CLIENTE')">
+<sec:authorize access="hasAuthority('ROLE_CLIENTI')">
 	<c:if test="${ticket.statoTicket.id == 1}">
 		<div class="pad margin no-print">
 			<div class="callout callout-info" style="margin-bottom: 0!important;">
@@ -115,7 +115,7 @@
 				        </div>
 				     </div>
 				       
-					<sec:authorize access="hasRole('ROLE_OPERATORE')">
+					<sec:authorize access="hasAuthority('ROLE_OPERATORI')">
 					 <div class="row">
 					   <div class="col-xs-12">
 					   	 <c:choose>

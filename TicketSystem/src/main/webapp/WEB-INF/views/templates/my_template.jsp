@@ -61,7 +61,7 @@
         <ul class="nav navbar-nav">
           
           
-          <sec:authorize access="hasRole('ROLE_CLIENTE')">
+          <sec:authorize access="hasAuthority('ROLE_CLIENTI')">
 	          <!-- Notifications: style can be found in dropdown.less -->
 	          <li class="dropdown notifications-menu">
 	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -140,7 +140,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU PRINCIPALE</li>
         
-        <sec:authorize access="hasRole('ROLE_CLIENTE')">
+        <sec:authorize access="hasAuthority('ROLE_CLIENTI')">
         	<li class="treeview">
 	          <a href="#">
 	            <i class="fa fa-laptop"></i>
@@ -156,7 +156,7 @@
 	        </li>
         </sec:authorize>
         
-        <sec:authorize access="hasRole('ROLE_OPERATORE')">
+        <sec:authorize access="hasAuthority('ROLE_OPERATORI')">
         	<li class="treeview">
 	          <a href="#">
 	            <i class="fa fa-laptop"></i>

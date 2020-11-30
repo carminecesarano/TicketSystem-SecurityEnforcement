@@ -1,12 +1,17 @@
 package com.psss.TicketSystem.configurations;
 
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
-
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
@@ -57,6 +62,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.deleteCookies("JSESSIONID")
 					.and()
 					.exceptionHandling().accessDeniedPage("/login-panel/accessDenied");			
+	
+		httpSecurity
+					.sessionManagement()
+					.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+					.invalidSessionUrl("/login-panel/login?expired")
+					.maximumSessions(1)
+					.expiredUrl("/login-panel/login?expired")
+					.maxSessionsPreventsLogin(true);
+	}
+	
+	@Configuration
+	public class MyHttpSessionListener implements HttpSessionListener {
+	    @Override
+	    public void sessionCreated(HttpSessionEvent event) {
+	        event.getSession().setMaxInactiveInterval(600);					// 10 minutes
+	    }
 	}
 	
 	@Autowired
@@ -73,6 +94,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	        .passwordCompare()
 	        .passwordEncoder(new LdapShaPasswordEncoder())
 	        .passwordAttribute("userPassword");
+	}
+	
+	@Bean
+	public HttpSessionEventPublisher httpSessionEventPublisher() {
+	    return new HttpSessionEventPublisher();
 	}
 		
 }

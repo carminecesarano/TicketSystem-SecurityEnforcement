@@ -18,10 +18,14 @@ public class LoginController {
 
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String login(
+		@RequestParam(value="expired", required = false) String expired,
 		@RequestParam(value="error", required = false) String error,
 		@RequestParam(value="logout", required = false) String logout,
 		ModelMap modelMap){
 		
+		if(expired != null) {
+			modelMap.put("msg", "Sessione scaduta. Effettua nuovamente il login.");
+		}
 		if(error != null) {
 			modelMap.put("msg", "Username o Password non valida");
 		}

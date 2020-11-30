@@ -189,7 +189,7 @@
   
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 1.0
+      <b>Version</b> 2.0
     </div>
     <strong>Copyright &copy; 2020 <a>PSSS Project.</a></strong> Alessandro Castaldo, Carmine Cesarano, Roberto Allocca. All rights
     reserved.

@@ -2,12 +2,9 @@ package com.psss.TicketSystem.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +12,6 @@ import javax.persistence.Table;
 public class Utente implements java.io.Serializable {
 
 	private Integer id;
-	private Ruolo ruolo;
 	private String username;
 	private String password;
 	private String fullName;
@@ -26,9 +22,7 @@ public class Utente implements java.io.Serializable {
 	public Utente() {
 	}
 
-	public Utente(Ruolo role, String username, String password, String fullName, boolean status, String email,
-			String phone) {
-		this.ruolo = role;
+	public Utente(String username, String password, String fullName, boolean status, String email, String phone) {
 		this.username = username;
 		this.password = password;
 		this.fullName = fullName;
@@ -47,16 +41,6 @@ public class Utente implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ruolo_id", nullable = false)
-	public Ruolo getRuolo() {
-		return this.ruolo;
-	}
-
-	public void setRuolo(Ruolo ruolo) {
-		this.ruolo = ruolo;
 	}
 
 	@Column(name = "username", nullable = false, length = 250)

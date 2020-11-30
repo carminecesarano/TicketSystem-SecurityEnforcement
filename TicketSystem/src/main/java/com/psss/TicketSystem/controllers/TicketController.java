@@ -4,11 +4,11 @@ package com.psss.TicketSystem.controllers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -44,16 +44,15 @@ public class TicketController implements ServletContextAware{
 	private NotificaService notificaService;
 	
 	public void getNotifiche(ModelMap modelMap, Utente account) {
-		if (account.getRuolo().getName().equals("ROLE_CLIENTE")) {
-			List<Ticket> tickets = ticketService.cercaAllTicketCliente(account.getUsername());		
-			List<Notifica> notifiche = new ArrayList<Notifica>();
 			
-			for (int i = 0; i < tickets.size(); i++) {
-				notifiche.addAll(notificaService.cercaNotificheByTicketId(tickets.get(i).getId(), false));
-			}
-			
-			modelMap.put("notifiche", notifiche);
-		} 
+		List<Ticket> tickets = ticketService.cercaAllTicketCliente(account.getUsername());		
+		List<Notifica> notifiche = new ArrayList<Notifica>();
+		
+		for (int i = 0; i < tickets.size(); i++) {
+			notifiche.addAll(notificaService.cercaNotificheByTicketId(tickets.get(i).getId(), false));
+		}
+		
+		modelMap.put("notifiche", notifiche);
 	}
 	
 	@RequestMapping(value= "send", method=RequestMethod.GET)
@@ -77,7 +76,6 @@ public class TicketController implements ServletContextAware{
 				StatoTicketAperto statoAperto = new StatoTicketAperto();
 				ticket.setStatoTicket(statoAperto);
 				ticket = ticketService.save(ticket);
-				
 				redirectAttributes.addFlashAttribute("success", "Ticket inviato correttamente.");
 			} else {
 				redirectAttributes.addFlashAttribute("err", "Invio del ticket fallito.");
@@ -120,16 +118,18 @@ public class TicketController implements ServletContextAware{
 	public String details(@PathVariable("id") int id, ModelMap modelMap, Authentication authentication) {
 		
 		Utente account = utenteService.findByUsername(authentication.getName());
-		Ticket ticket = ticketService.cercaTicketCliente(account.getUsername(), id);				
+		Ticket ticket = ticketService.cercaTicketCliente(account.getUsername(), id);			
+		GrantedAuthority auth = authentication.getAuthorities().iterator().next();
 		
 		if(ticket != null) {
 			modelMap.put("ticket", ticket);
 			modelMap.put("account", account);
-			getNotifiche(modelMap, account);
+			if ("ROLE_CLIENTI".equals(auth.toString())) {
+				getNotifiche(modelMap, account);
+			}
 			return "ticket.details";
 		}
 		else {
-		//	return "redirect:/login-panel/accessDenied";
 			return "ticket.denied";
 		}
 	}

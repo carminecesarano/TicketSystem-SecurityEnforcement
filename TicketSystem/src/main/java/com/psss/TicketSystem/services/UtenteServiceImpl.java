@@ -17,13 +17,4 @@ public class UtenteServiceImpl implements UtenteService{
 		return utenteRepository.findByUsername(username);
 	}
 
-	@Override
-	public Iterable<Utente> findAll() {
-		return utenteRepository.findAll();
-	}
-
-	@Override
-	public Utente find(int id) {
-		return utenteRepository.findById(id).get();
-	}
 }

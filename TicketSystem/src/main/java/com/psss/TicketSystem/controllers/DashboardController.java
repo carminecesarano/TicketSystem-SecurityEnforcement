@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,22 +32,21 @@ public class DashboardController {
 	private NotificaService notificaService;
 	
 	public void getNotifiche(ModelMap modelMap, Utente account) {
+		List<Ticket> tickets = ticketService.cercaAllTicketCliente(account.getUsername());		
+		List<Notifica> notifiche = new ArrayList<Notifica>();
 		
-		if (account.getRuolo().getName().equals("ROLE_CLIENTI")) {
-			List<Ticket> tickets = ticketService.cercaAllTicketCliente(account.getUsername());		
-			List<Notifica> notifiche = new ArrayList<Notifica>();
-			
-			for (int i = 0; i < tickets.size(); i++) {
-				notifiche.addAll(notificaService.cercaNotificheByTicketId(tickets.get(i).getId(), false));
-			}
-			modelMap.put("notifiche", notifiche);
-		} 
+		for (int i = 0; i < tickets.size(); i++) {
+			notifiche.addAll(notificaService.cercaNotificheByTicketId(tickets.get(i).getId(), false));
+		}
+		modelMap.put("notifiche", notifiche);
 	}
 	
 	@RequestMapping(value= {"","index"}, method=RequestMethod.GET)
 	public String index(Authentication authentication, ModelMap modelMap) {
 		
+		GrantedAuthority auth = authentication.getAuthorities().iterator().next();
 		Utente account = accountService.findByUsername(authentication.getName());
+		System.out.println(authentication.getName());
 		int size_cliente = ticketService.cercaAllTicketCliente(account.getUsername()).size();
 		int size_operatore = ticketService.cercaTicketOperatore(account.getUsername()).size();
 		int size_aperti = ticketService.cercaTicketStatoAperto().size();
@@ -55,7 +55,10 @@ public class DashboardController {
 		modelMap.put("size_operatore", size_operatore);
 		modelMap.put("size_aperti", size_aperti);
 		modelMap.put("account", account);
-		getNotifiche(modelMap, account);
+		
+		if ("ROLE_CLIENTI".equals(auth.toString())) {
+			getNotifiche(modelMap, account);
+		}
 		return "dashboard.index";
 	}
 	

@@ -42,13 +42,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		httpSecurity
 			        .authorizeRequests()
 			        
-			        .antMatchers("/dashboard/**").access("hasAuthority('ROLE_CLIENTI') or hasAuthority('ROLE_OPERATORI')")
-					.antMatchers("/ticket/details").access("hasAuthority('ROLE_CLIENTI') or hasAuthority('ROLE_OPERATORI')")
+			        .antMatchers("/").permitAll()
+			        .antMatchers("/login-panel/login").permitAll()
+			        .antMatchers("/resources/public/**").permitAll()
+			        .antMatchers("/login-panel/accessDenied").authenticated()
+			        .antMatchers("/login-panel/welcome").authenticated()
+			        .antMatchers("/dashboard/**").authenticated()
+					.antMatchers("/ticket/details/*").authenticated()
 					.antMatchers("/ticket/send").access("hasAuthority('ROLE_CLIENTI')")
 					.antMatchers("/ticket/history_cliente").access("hasAuthority('ROLE_CLIENTI')")
 					.antMatchers("/ticket/history_operatore").access("hasAuthority('ROLE_OPERATORI')")
 					.antMatchers("/ticket/history_aperti").access("hasAuthority('ROLE_OPERATORI')")
-			        
+					.antMatchers("/ticket/aggiorna_stato/*").access("hasAuthority('ROLE_OPERATORI')")
+				//	.anyRequest().denyAll()
+					
 			        .and()
 			        .formLogin()
 			        .loginPage("/login-panel/login")
@@ -66,10 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		httpSecurity
 					.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-					.invalidSessionUrl("/login-panel/login?expired")
-					.maximumSessions(1)
-					.expiredUrl("/login-panel/login?expired")
-					.maxSessionsPreventsLogin(true);
+					.invalidSessionUrl("/login-panel/login?expired");
 	}
 	
 	@Configuration

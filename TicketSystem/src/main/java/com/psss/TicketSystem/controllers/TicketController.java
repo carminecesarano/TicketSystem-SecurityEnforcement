@@ -118,15 +118,21 @@ public class TicketController implements ServletContextAware{
 	public String details(@PathVariable("id") int id, ModelMap modelMap, Authentication authentication) {
 		
 		Utente account = utenteService.findByUsername(authentication.getName());
-		Ticket ticket = ticketService.cercaTicketCliente(account.getUsername(), id);			
 		GrantedAuthority auth = authentication.getAuthorities().iterator().next();
+		
+		Ticket ticket = null;
+		
+		if ("ROLE_CLIENTI".equals(auth.toString())) {
+			ticket = ticketService.cercaTicketCliente(account.getUsername(), id);
+			getNotifiche(modelMap, account);
+		}
+		else if (("ROLE_OPERATORI".equals(auth.toString()))) {
+			ticket = ticketService.findTicket(id);
+		}
 		
 		if(ticket != null) {
 			modelMap.put("ticket", ticket);
 			modelMap.put("account", account);
-			if ("ROLE_CLIENTI".equals(auth.toString())) {
-				getNotifiche(modelMap, account);
-			}
 			return "ticket.details";
 		}
 		else {

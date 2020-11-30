@@ -11,9 +11,14 @@ import org.springframework.security.core.*;
 @RequestMapping(value= {"", "login-panel"})
 public class LoginController {
 
-	@RequestMapping(value = {"", "index"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"index"}, method = RequestMethod.GET)
 	public String index() {
 		return "redirect:/login-panel/login";
+	}
+	
+	@RequestMapping(value = {""}, method = RequestMethod.GET)
+	public String indexLogged() {
+		return "redirect:/dashboard";
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.GET)
@@ -42,7 +47,7 @@ public class LoginController {
 			modelMap.put("msg","Ciao " + authentication.getName() + ", non hai i permessi necessari per accedere");
 		} else modelMap.put("msg","Non hai i permessi per accedere a questa pagina!");
 		
-		return "login.accessDenied";
+		return "ticket.denied";
 	}
 	
 	@RequestMapping(value = "welcome", method = RequestMethod.GET)

@@ -112,7 +112,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-right">
-                  <a href="${pageContext.request.contextPath}/process-logout" class="btn btn-default btn-flat">Log out</a>
+                  <form action="${pageContext.request.contextPath}/process-logout" method="post">
+			          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			          <button type="submit" class="btn btn-primary btn-block btn-flat">Logout</button>
+				  </form>                  
                 </div>
               </li>
             </ul>

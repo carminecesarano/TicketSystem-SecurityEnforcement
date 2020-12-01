@@ -56,6 +56,7 @@
               </div>
 
               <div class="box-footer" style="text-align: right">
+                <sec:csrfInput /> 
                 <button type="submit" class="btn btn-primary">Invia Ticket <i class="fa fa-fw fa-send"></i></button>
               </div>
             </s:form>

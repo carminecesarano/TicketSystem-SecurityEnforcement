@@ -37,8 +37,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		
-		httpSecurity.csrf().disable();	
-		
 		httpSecurity
 			        .authorizeRequests()
 			        
@@ -54,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.antMatchers("/ticket/history_operatore").access("hasAuthority('ROLE_OPERATORI')")
 					.antMatchers("/ticket/history_aperti").access("hasAuthority('ROLE_OPERATORI')")
 					.antMatchers("/ticket/aggiorna_stato/*").access("hasAuthority('ROLE_OPERATORI')")
-				//	.anyRequest().denyAll()
+					.anyRequest().denyAll()
 					
 			        .and()
 			        .formLogin()

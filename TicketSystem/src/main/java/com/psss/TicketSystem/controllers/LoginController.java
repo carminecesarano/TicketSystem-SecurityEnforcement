@@ -28,14 +28,14 @@ public class LoginController {
 		@RequestParam(value="logout", required = false) String logout,
 		ModelMap modelMap){
 		
+		if(logout != null) {
+			modelMap.put("success","Logout effettuato correttamente");
+		}
 		if(expired != null) {
 			modelMap.put("msg", "Sessione scaduta. Effettua nuovamente il login.");
 		}
 		if(error != null) {
 			modelMap.put("msg", "Username o Password non valida");
-		}
-		if(logout != null) {
-			modelMap.put("success","Logout effettuato correttamente");
 		}
 		return "login.index";
 	}

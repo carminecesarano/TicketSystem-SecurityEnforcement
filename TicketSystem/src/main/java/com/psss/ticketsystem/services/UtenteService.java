@@ -1,6 +1,6 @@
-package com.psss.TicketSystem.services;
+package com.psss.ticketsystem.services;
 
-import com.psss.TicketSystem.entities.Utente;
+import com.psss.ticketsystem.entities.Utente;
 
 
 public interface UtenteService {

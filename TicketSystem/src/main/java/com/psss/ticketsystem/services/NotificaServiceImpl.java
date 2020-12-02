@@ -1,4 +1,4 @@
-package com.psss.TicketSystem.services;
+package com.psss.ticketsystem.services;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import com.psss.TicketSystem.entities.Notifica;
-import com.psss.TicketSystem.repositories.NotificaRepository;
+import com.psss.ticketsystem.entities.Notifica;
+import com.psss.ticketsystem.repositories.NotificaRepository;
 
 
 @Service("notificaService")
@@ -32,7 +32,6 @@ public class NotificaServiceImpl implements NotificaService{
 	@Override
 	public void notify(Notifica notifica, String username) {
 		messagingTemplate.convertAndSendToUser(username, "/queue/notify", notifica);
-		return;
 	}
 
 	

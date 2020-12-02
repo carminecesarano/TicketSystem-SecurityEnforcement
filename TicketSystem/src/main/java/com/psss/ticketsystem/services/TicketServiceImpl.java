@@ -1,14 +1,14 @@
-package com.psss.TicketSystem.services;
+package com.psss.ticketsystem.services;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.psss.TicketSystem.entities.Utente;
-import com.psss.TicketSystem.entities.Ticket;
-import com.psss.TicketSystem.repositories.UtenteRepository;
-import com.psss.TicketSystem.repositories.TicketRepository;
+import com.psss.ticketsystem.entities.Ticket;
+import com.psss.ticketsystem.entities.Utente;
+import com.psss.ticketsystem.repositories.TicketRepository;
+import com.psss.ticketsystem.repositories.UtenteRepository;
 
 
 @Service("ticketService")
@@ -46,8 +46,8 @@ public class TicketServiceImpl implements TicketService{
 	
 	@Override
 	public List<Ticket> cercaTicketStatoAperto() {
-		int stato_aperto = 1;
-		return ticketRepository.cercaTicketStato(stato_aperto);
+		int statoAperto = 1;
+		return ticketRepository.cercaTicketStato(statoAperto);
 	}
 	
 	@Override

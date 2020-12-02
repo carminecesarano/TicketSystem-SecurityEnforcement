@@ -1,4 +1,4 @@
-package com.psss.TicketSystem.controllers;
+package com.psss.ticketsystem.controllers;
 
 
 import java.util.ArrayList;
@@ -12,22 +12,23 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.psss.TicketSystem.entities.Utente;
-import com.psss.TicketSystem.entities.Notifica;
-import com.psss.TicketSystem.entities.StatoTicketAperto;
-import com.psss.TicketSystem.entities.StatoTicketChiuso;
-import com.psss.TicketSystem.entities.StatoTicketInLavorazione;
-import com.psss.TicketSystem.entities.Ticket;
-import com.psss.TicketSystem.services.UtenteService;
-import com.psss.TicketSystem.services.NotificaService;
-import com.psss.TicketSystem.services.TicketService;
+import com.psss.ticketsystem.entities.Notifica;
+import com.psss.ticketsystem.entities.StatoTicketAperto;
+import com.psss.ticketsystem.entities.StatoTicketChiuso;
+import com.psss.ticketsystem.entities.StatoTicketInLavorazione;
+import com.psss.ticketsystem.entities.Ticket;
+import com.psss.ticketsystem.entities.Utente;
+import com.psss.ticketsystem.services.NotificaService;
+import com.psss.ticketsystem.services.TicketService;
+import com.psss.ticketsystem.services.UtenteService;
 
 @Controller
 @Component
@@ -46,7 +47,7 @@ public class TicketController implements ServletContextAware{
 	public void getNotifiche(ModelMap modelMap, Utente account) {
 			
 		List<Ticket> tickets = ticketService.cercaAllTicketCliente(account.getUsername());		
-		List<Notifica> notifiche = new ArrayList<Notifica>();
+		List<Notifica> notifiche = new ArrayList<>();
 		
 		for (int i = 0; i < tickets.size(); i++) {
 			notifiche.addAll(notificaService.cercaNotificheByTicketId(tickets.get(i).getId(), false));
@@ -55,7 +56,7 @@ public class TicketController implements ServletContextAware{
 		modelMap.put("notifiche", notifiche);
 	}
 	
-	@RequestMapping(value= "send", method=RequestMethod.GET)
+	@GetMapping(value= "send")
 	public String send(ModelMap modelMap, Authentication authentication) {
 		Ticket ticket = new Ticket();
 		Utente account = utenteService.findByUsername(authentication.getName());
@@ -66,7 +67,7 @@ public class TicketController implements ServletContextAware{
 		return "ticket.send";
 	}
 	
-	@RequestMapping(value= "send", method=RequestMethod.POST)
+	@PostMapping(value= "send")
 	public String send(@ModelAttribute("ticket") Ticket ticket, Authentication authentication, RedirectAttributes redirectAttributes) {
 		try {
 			if (!ticket.getTitle().equals("") && !ticket.getDescription().equals("")) {
@@ -75,19 +76,18 @@ public class TicketController implements ServletContextAware{
 				ticket.setCliente(account);
 				StatoTicketAperto statoAperto = new StatoTicketAperto();
 				ticket.setStatoTicket(statoAperto);
-				ticket = ticketService.save(ticket);
+				ticketService.save(ticket);
 				redirectAttributes.addFlashAttribute("success", "Ticket inviato correttamente.");
 			} else {
 				redirectAttributes.addFlashAttribute("err", "Invio del ticket fallito.");
 			}
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			redirectAttributes.addFlashAttribute("err", "Invio del ticket fallito.");
 		}
 		return "redirect:/ticket/send";
 	}	
 	
-	@RequestMapping(value= "history_aperti", method=RequestMethod.GET)
+	@GetMapping(value= "history_aperti")
 	public String history_aperti(ModelMap modelMap, Authentication authentication) {
 		Utente account = utenteService.findByUsername(authentication.getName());
 		modelMap.put("account", account);
@@ -95,7 +95,7 @@ public class TicketController implements ServletContextAware{
 		return "ticket.history";
 	}
 	
-	@RequestMapping(value= "history_cliente", method=RequestMethod.GET)
+	@GetMapping(value= "history_cliente")
 	public String history_cliente(Authentication authentication, ModelMap modelMap) {
 		Utente cliente = utenteService.findByUsername(authentication.getName());
 		List<Ticket> tickets = ticketService.cercaAllTicketCliente(cliente.getUsername());		// Tutti i ticket del cliente
@@ -106,7 +106,7 @@ public class TicketController implements ServletContextAware{
 		return "ticket.history";
 	}
 	
-	@RequestMapping(value= "history_operatore", method=RequestMethod.GET)
+	@GetMapping(value= "history_operatore")
 	public String history_operatore(Authentication authentication, ModelMap modelMap) {
 		Utente account = utenteService.findByUsername(authentication.getName());
 		modelMap.put("account", account);
@@ -114,7 +114,7 @@ public class TicketController implements ServletContextAware{
 		return "ticket.history";
 	}
 	
-	@RequestMapping(value= "details/{id}", method=RequestMethod.GET)
+	@GetMapping(value= "details/{id}")
 	public String details(@PathVariable("id") int id, ModelMap modelMap, Authentication authentication) {
 		
 		Utente account = utenteService.findByUsername(authentication.getName());
@@ -156,6 +156,8 @@ public class TicketController implements ServletContextAware{
 				case 3:
 					ticket.setStatoTicket(new StatoTicketChiuso());
 					break;
+				default:
+				    break;
 			}
 			
 			if (ticket.getOperatore() == null || ticket.getOperatore().getId() == operatore.getId()) {

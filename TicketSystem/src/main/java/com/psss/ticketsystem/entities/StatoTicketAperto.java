@@ -1,4 +1,4 @@
-package com.psss.TicketSystem.entities;
+package com.psss.ticketsystem.entities;
 
 public class StatoTicketAperto extends StatoTicket {
 	

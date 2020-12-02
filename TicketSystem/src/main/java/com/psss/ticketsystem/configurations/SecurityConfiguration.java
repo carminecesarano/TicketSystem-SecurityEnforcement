@@ -1,16 +1,16 @@
-package com.psss.TicketSystem.configurations;
+package com.psss.ticketsystem.configurations;
 
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -74,15 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.invalidSessionUrl("/login-panel/login?expired");
 	}
 	
-	@Configuration
-	public class MyHttpSessionListener implements HttpSessionListener {
-	    @Override
-	    public void sessionCreated(HttpSessionEvent event) {
-	        event.getSession().setMaxInactiveInterval(600);					// 10 minutes
-	    }
-	}
-	
-	@Autowired
+	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 	        .ldapAuthentication()
@@ -94,13 +86,40 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	        .managerPassword(ldapPrincipalPassword)			// Password of the user who will bind to the LDAP server to perform the search
 	        .and()
 	        .passwordCompare()
-	        .passwordEncoder(new LdapShaPasswordEncoder())
+	        .passwordEncoder(new BCryptPasswordEncoder())
 	        .passwordAttribute("userPassword");
+	}
+	
+	@Configuration
+	public class MyHttpSessionListener implements HttpSessionListener {
+	    @Override
+	    public void sessionCreated(HttpSessionEvent event) {
+	        event.getSession().setMaxInactiveInterval(600);					// 10 minutes
+	    }
 	}
 	
 	@Bean
 	public HttpSessionEventPublisher httpSessionEventPublisher() {
 	    return new HttpSessionEventPublisher();
+	}
+	
+	private PasswordEncoder passwordEncoder() {
+		final BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		return new PasswordEncoder() {
+			@Override
+			public String encode(CharSequence rawPassword) {
+				return bcrypt.encode(rawPassword.toString());
+			}
+			@Override
+			public boolean matches(CharSequence rawPassword, String encodedPassword) {
+				return bcrypt.matches(rawPassword, encodedPassword);
+			}
+		};
+	}
+
+	@Bean
+	public BCryptPasswordEncoder bcryptEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 		
 }

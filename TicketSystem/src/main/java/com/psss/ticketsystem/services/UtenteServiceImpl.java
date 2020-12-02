@@ -1,10 +1,11 @@
-package com.psss.TicketSystem.services;
+package com.psss.ticketsystem.services;
 
 import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import com.psss.TicketSystem.entities.Utente;
-import com.psss.TicketSystem.repositories.UtenteRepository;
+
+import com.psss.ticketsystem.entities.Utente;
+import com.psss.ticketsystem.repositories.UtenteRepository;
 
 @Service("utenteService")
 public class UtenteServiceImpl implements UtenteService{

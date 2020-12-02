@@ -1,4 +1,4 @@
-package com.psss.TicketSystem.entities;
+package com.psss.ticketsystem.entities;
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,7 +28,7 @@ public class Ticket implements java.io.Serializable {
 	public Ticket() {
 	}
 
-	public Ticket(Utente operatore, Utente cliente, int status, String title, String description, Date createdDate, StatoTicket statoTicket) {
+	public Ticket(Utente operatore, Utente cliente, String title, String description, Date createdDate, StatoTicket statoTicket) {
 		this.operatore = operatore;
 		this.cliente = cliente;
 		this.title = title;

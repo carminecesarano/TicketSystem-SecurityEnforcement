@@ -1,9 +1,9 @@
-package com.psss.TicketSystem.controllers;
+package com.psss.ticketsystem.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.core.*;
 
@@ -11,17 +11,17 @@ import org.springframework.security.core.*;
 @RequestMapping(value= {"", "login-panel"})
 public class LoginController {
 
-	@RequestMapping(value = {"index"}, method = RequestMethod.GET)
+	@GetMapping(value = {"index"})
 	public String index() {
 		return "redirect:/login-panel/login";
 	}
 	
-	@RequestMapping(value = {""}, method = RequestMethod.GET)
+	@GetMapping(value = {""})
 	public String indexLogged() {
 		return "redirect:/dashboard";
 	}
 
-	@RequestMapping(value = "login", method = RequestMethod.GET)
+	@GetMapping(value = "login")
 	public String login(
 		@RequestParam(value="expired", required = false) String expired,
 		@RequestParam(value="error", required = false) String error,
@@ -40,7 +40,7 @@ public class LoginController {
 		return "login.index";
 	}
 	
-	@RequestMapping(value="accessDenied", method = RequestMethod.GET)
+	@GetMapping(value="accessDenied")
 	public String accessDenied(Authentication authentication, ModelMap modelMap) {
 		
 		if(authentication != null) {
@@ -50,7 +50,7 @@ public class LoginController {
 		return "ticket.denied";
 	}
 	
-	@RequestMapping(value = "welcome", method = RequestMethod.GET)
+	@GetMapping(value = "welcome")
 	public String welcome() {
 		return "redirect:/dashboard";
 	}

@@ -1,4 +1,4 @@
-package com.psss.TicketSystem.configurations;
+package com.psss.ticketsystem.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,12 +20,12 @@ public class TemplateConfiguration implements WebMvcConfigurer {
 	@Bean
 	public TilesConfigurer tilesConfigurer() {
 		TilesConfigurer configurer = new TilesConfigurer();
-		configurer.setDefinitions(new String[] {
+		configurer.setDefinitions(
 				"/WEB-INF/tiles/tiles.xml",
 				"/WEB-INF/tiles/tiles_dashboard.xml",
 				"/WEB-INF/tiles/tiles_login.xml",
 				"/WEB-INF/tiles/tiles_ticket.xml"
-		});
+		);
 		return configurer;		
 	}
 }

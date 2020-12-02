@@ -1,9 +1,8 @@
-package com.psss.TicketSystem.services;
+package com.psss.ticketsystem.services;
 
 import java.util.List;
 
-
-import com.psss.TicketSystem.entities.Ticket;
+import com.psss.ticketsystem.entities.Ticket;
 
 public interface TicketService {
 	

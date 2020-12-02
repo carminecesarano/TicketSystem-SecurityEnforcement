@@ -1,9 +1,9 @@
-package com.psss.TicketSystem.repositories;
+package com.psss.ticketsystem.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.psss.TicketSystem.entities.Utente;
+import com.psss.ticketsystem.entities.Utente;
 
 
 @Repository("utenteRepository")

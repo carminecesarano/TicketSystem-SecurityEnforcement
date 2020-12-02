@@ -1,4 +1,4 @@
-package com.psss.TicketSystem.configurations;
+package com.psss.ticketsystem.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
@@ -24,7 +24,6 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     // messaging options if WebSocket is not available.
     registry.addEndpoint("/ws").withSockJS();
     
-    return;
   }
 
 } 

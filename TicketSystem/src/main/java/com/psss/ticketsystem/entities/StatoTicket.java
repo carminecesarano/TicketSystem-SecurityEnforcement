@@ -1,4 +1,4 @@
-package com.psss.TicketSystem.entities;
+package com.psss.ticketsystem.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

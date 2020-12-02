@@ -1,4 +1,4 @@
-package com.psss.TicketSystem.configurations;
+package com.psss.ticketsystem.configurations;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;

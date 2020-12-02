@@ -1,8 +1,8 @@
-package com.psss.TicketSystem.services;
+package com.psss.ticketsystem.services;
 
 import java.util.List;
 
-import com.psss.TicketSystem.entities.Notifica;
+import com.psss.ticketsystem.entities.Notifica;
 
 public interface NotificaService {
 	

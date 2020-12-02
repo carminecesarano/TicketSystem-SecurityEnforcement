@@ -1,4 +1,4 @@
-package com.psss.TicketSystem.repositories;
+package com.psss.ticketsystem.repositories;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.psss.TicketSystem.entities.Notifica;
+import com.psss.ticketsystem.entities.Notifica;
 
 @Repository("notificaRepository")
 public interface NotificaRepository extends CrudRepository<Notifica, Integer>{

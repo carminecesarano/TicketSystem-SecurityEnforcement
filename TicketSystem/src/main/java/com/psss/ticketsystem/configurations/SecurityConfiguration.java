@@ -3,6 +3,7 @@ package com.psss.ticketsystem.configurations;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.vault.core.VaultTemplate;
+import org.springframework.vault.support.VaultResponse;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
@@ -27,12 +29,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     
     @Value("${ldap.user.dn.pattern}")
     private String userDnPatter;
-    
+  /*  
     @Value("${ldap.username}")
     private String ldapSecurityPrincipal;
 
     @Value("${ldap.password}")
     private String ldapPrincipalPassword;
+    */
+    @Autowired
+	private VaultTemplate vaultTemplate;
     
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -76,14 +81,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
+		VaultResponse response = vaultTemplate.read("/openldap/static-cred/ssdgroup");
+		
 		auth
 	        .ldapAuthentication()
 	        .userDnPatterns(userDnPatter)
 	        .groupSearchBase("ou=groups")
 	        .contextSource()
 	        .url(ldapUrl + ldapBaseDn)
-	        .managerDn(ldapSecurityPrincipal)				// DN of the user who will bind to the LDAP server to perform the search
-	        .managerPassword(ldapPrincipalPassword)			// Password of the user who will bind to the LDAP server to perform the search
+	        .managerDn(response.getData().get("dn").toString())						// DN of the user who will bind to the LDAP server to perform the search
+	        .managerPassword(response.getData().get("password").toString())			// Password of the user who will bind to the LDAP server to perform the search
 	        .and()
 	        .passwordCompare()
 	        .passwordEncoder(new BCryptPasswordEncoder())
@@ -103,24 +111,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	    return new HttpSessionEventPublisher();
 	}
 	
-	private PasswordEncoder passwordEncoder() {
-		final BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-		return new PasswordEncoder() {
-			@Override
-			public String encode(CharSequence rawPassword) {
-				return bcrypt.encode(rawPassword.toString());
-			}
-			@Override
-			public boolean matches(CharSequence rawPassword, String encodedPassword) {
-				return bcrypt.matches(rawPassword, encodedPassword);
-			}
-		};
-	}
-
-	@Bean
-	public BCryptPasswordEncoder bcryptEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	
 		
 }
 

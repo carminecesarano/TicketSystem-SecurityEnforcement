@@ -13,20 +13,16 @@ public class Utente implements java.io.Serializable {
 
 	private Integer id;
 	private String username;
-	private String password;
 	private String fullName;
-	private boolean status;
 	private String email;
 	private String phone;
 	
 	public Utente() {
 	}
 
-	public Utente(String username, String password, String fullName, boolean status, String email, String phone) {
+	public Utente(String username, String fullName, String email, String phone) {
 		this.username = username;
-		this.password = password;
 		this.fullName = fullName;
-		this.status = status;
 		this.email = email;
 		this.phone = phone;
 	}
@@ -52,15 +48,6 @@ public class Utente implements java.io.Serializable {
 		this.username = username;
 	}
 
-	@Column(name = "password", nullable = false, length = 250)
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	@Column(name = "full_name", nullable = false)
 	public String getFullName() {
 		return this.fullName;
@@ -68,15 +55,6 @@ public class Utente implements java.io.Serializable {
 
 	public void setFullName(String fullName) {
 		this.fullName = fullName;
-	}
-
-	@Column(name = "status", nullable = false)
-	public boolean isStatus() {
-		return this.status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
 	}
 
 	@Column(name = "email", nullable = false, length = 250)

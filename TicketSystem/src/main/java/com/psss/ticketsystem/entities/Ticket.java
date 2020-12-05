@@ -2,6 +2,7 @@ package com.psss.ticketsystem.entities;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.psss.ticketsystem.services.TransitConverter;
+
 
 @Entity
 @Table(name = "ticket")
@@ -39,7 +43,6 @@ public class Ticket implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-
 	@Column(name = "id", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
@@ -69,6 +72,7 @@ public class Ticket implements java.io.Serializable {
 		this.cliente = cliente;
 	}
 
+//	@Convert(converter = TransitConverter.class)
 	@Column(name = "title", nullable = false, length = 250)
 	public String getTitle() {
 		return this.title;

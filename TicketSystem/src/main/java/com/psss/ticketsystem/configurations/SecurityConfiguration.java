@@ -29,13 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     
     @Value("${ldap.user.dn.pattern}")
     private String userDnPatter;
-  /*  
-    @Value("${ldap.username}")
-    private String ldapSecurityPrincipal;
 
-    @Value("${ldap.password}")
-    private String ldapPrincipalPassword;
-    */
     @Autowired
 	private VaultTemplate vaultTemplate;
     
@@ -45,18 +39,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		httpSecurity
 			        .authorizeRequests()
 			        
-			        .antMatchers("/").permitAll()
-			        .antMatchers("/login-panel/login").permitAll()
-			        .antMatchers("/resources/public/**").permitAll()
-			        .antMatchers("/login-panel/accessDenied").authenticated()
-			        .antMatchers("/login-panel/welcome").authenticated()
-			        .antMatchers("/dashboard/**").authenticated()
-					.antMatchers("/ticket/details/*").authenticated()
-					.antMatchers("/ticket/send").access("hasAuthority('ROLE_CLIENTI')")
-					.antMatchers("/ticket/history_cliente").access("hasAuthority('ROLE_CLIENTI')")
-					.antMatchers("/ticket/history_operatore").access("hasAuthority('ROLE_OPERATORI')")
-					.antMatchers("/ticket/history_aperti").access("hasAuthority('ROLE_OPERATORI')")
-					.antMatchers("/ticket/aggiorna_stato/*").access("hasAuthority('ROLE_OPERATORI')")
+			        .mvcMatchers("/").permitAll()
+			        .mvcMatchers("/login-panel/login").permitAll()
+			        .mvcMatchers("/resources/public/**").permitAll()
+			        .mvcMatchers("/resources/private/**").denyAll()
+			        .mvcMatchers("/login-panel/accessDenied").authenticated()
+			        .mvcMatchers("/login-panel/welcome").authenticated()
+			        .mvcMatchers("/dashboard/**").authenticated()
+					.mvcMatchers("/ticket/details/*").authenticated()
+					.mvcMatchers("/ticket/send").access("hasAuthority('ROLE_CLIENTI')")
+					.mvcMatchers("/ticket/history_cliente").access("hasAuthority('ROLE_CLIENTI')")
+					.mvcMatchers("/ticket/history_operatore").access("hasAuthority('ROLE_OPERATORI')")
+					.mvcMatchers("/ticket/history_aperti").access("hasAuthority('ROLE_OPERATORI')")
+					.mvcMatchers("/ticket/aggiorna_stato/*").access("hasAuthority('ROLE_OPERATORI')")
 					.anyRequest().denyAll()
 					
 			        .and()

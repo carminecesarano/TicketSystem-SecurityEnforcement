@@ -2,6 +2,8 @@ package com.psss.ticketsystem.entities;
 
 public class StatoTicketChiuso extends StatoTicket{
 
+	private static final long serialVersionUID = 8108116044211428778L;
+
 	public StatoTicketChiuso() {
 		this.setId(3);
 		this.setName("CHIUSO");

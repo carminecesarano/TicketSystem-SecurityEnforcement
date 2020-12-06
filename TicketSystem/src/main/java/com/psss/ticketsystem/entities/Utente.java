@@ -1,16 +1,21 @@
 package com.psss.ticketsystem.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.psss.ticketsystem.utils.TransitConverterUser;
+
 @Entity
 @Table(name = "utenti")
 public class Utente implements java.io.Serializable {
 
+	private static final long serialVersionUID = -6999018310754628005L;
+	
 	private Integer id;
 	private String username;
 	private String fullName;
@@ -39,6 +44,7 @@ public class Utente implements java.io.Serializable {
 		this.id = id;
 	}
 
+	
 	@Column(name = "username", nullable = false, length = 250)
 	public String getUsername() {
 		return this.username;
@@ -48,6 +54,7 @@ public class Utente implements java.io.Serializable {
 		this.username = username;
 	}
 
+	@Convert(converter = TransitConverterUser.class)
 	@Column(name = "full_name", nullable = false)
 	public String getFullName() {
 		return this.fullName;
@@ -57,6 +64,7 @@ public class Utente implements java.io.Serializable {
 		this.fullName = fullName;
 	}
 
+	@Convert(converter = TransitConverterUser.class)
 	@Column(name = "email", nullable = false, length = 250)
 	public String getEmail() {
 		return this.email;
@@ -66,6 +74,7 @@ public class Utente implements java.io.Serializable {
 		this.email = email;
 	}
 
+	@Convert(converter = TransitConverterUser.class)
 	@Column(name = "phone", nullable = false, length = 250)
 	public String getPhone() {
 		return this.phone;

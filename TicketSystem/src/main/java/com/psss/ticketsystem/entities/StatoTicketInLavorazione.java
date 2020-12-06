@@ -2,6 +2,8 @@ package com.psss.ticketsystem.entities;
 
 public class StatoTicketInLavorazione extends StatoTicket{
 
+	private static final long serialVersionUID = -3010929542773643100L;
+
 	public StatoTicketInLavorazione() {
 		this.setId(2);
 		this.setName("IN_LAVORAZIONE");

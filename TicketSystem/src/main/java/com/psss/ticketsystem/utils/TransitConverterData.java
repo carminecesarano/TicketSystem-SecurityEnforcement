@@ -1,16 +1,13 @@
-package com.psss.ticketsystem.services;
+package com.psss.ticketsystem.utils;
 
 import javax.persistence.AttributeConverter;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Service;
 import org.springframework.vault.core.VaultOperations;
 import org.springframework.vault.support.Ciphertext;
 import org.springframework.vault.support.Plaintext;
 
-public class TransitConverter implements AttributeConverter<String, String> {
+
+public class TransitConverterData implements AttributeConverter<String, String> {
 	
 	@Override
 	public String convertToDatabaseColumn(String column) {	
@@ -30,14 +27,9 @@ public class TransitConverter implements AttributeConverter<String, String> {
 
 }
 
-@Service
-class BeanUtil implements ApplicationContextAware {
-    private static ApplicationContext context;
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        context = applicationContext;
-    }
-    public static <T> T getBean(Class<T> beanClass) {
-        return context.getBean(beanClass);
-    }
-}
+
+	
+	
+
+	
+

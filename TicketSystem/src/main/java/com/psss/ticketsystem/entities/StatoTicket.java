@@ -10,6 +10,8 @@ import javax.persistence.Table;
 @Table(name = "statoticket")
 public class StatoTicket implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1916428535658339233L;
+	
 	private Integer id;
 	private String name;
 

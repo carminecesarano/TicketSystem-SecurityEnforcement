@@ -14,13 +14,16 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.psss.ticketsystem.services.TransitConverter;
+import com.psss.ticketsystem.utils.TransitConverterData;
 
 
 @Entity
 @Table(name = "ticket")
 public class Ticket implements java.io.Serializable {
 
+	
+	private static final long serialVersionUID = 8451257540755538463L;
+	
 	private Integer id;
 	private Utente operatore;
 	private Utente cliente;
@@ -72,7 +75,7 @@ public class Ticket implements java.io.Serializable {
 		this.cliente = cliente;
 	}
 
-//	@Convert(converter = TransitConverter.class)
+	@Convert(converter = TransitConverterData.class)
 	@Column(name = "title", nullable = false, length = 250)
 	public String getTitle() {
 		return this.title;
@@ -82,6 +85,7 @@ public class Ticket implements java.io.Serializable {
 		this.title = title;
 	}
 
+	@Convert(converter = TransitConverterData.class)
 	@Column(name = "description", nullable = false, length = 65535)
 	public String getDescription() {
 		return this.description;

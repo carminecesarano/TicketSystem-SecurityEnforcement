@@ -3,35 +3,17 @@ package com.psss.ticketsystem.configurations;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
-import org.springframework.vault.core.VaultTemplate;
-import org.springframework.vault.support.VaultResponse;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
-	
-	@Value("${ldap.url}")
-    private String ldapUrl;
-
-    @Value("${ldap.base.dn}")
-    private String ldapBaseDn;
-    
-    @Value("${ldap.user.dn.pattern}")
-    private String userDnPattern;
-
-    @Autowired
-	private VaultTemplate vaultTemplate;
     
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -74,26 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 					.invalidSessionUrl("/login-panel/login?expired");
-	}
-	
-	@Override
-	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		
-		VaultResponse response = vaultTemplate.read("/openldap/static-cred/ssdgroup");
-			
-		auth
-	        .ldapAuthentication()
-	        .userDnPatterns(userDnPattern)
-	        .groupSearchBase("ou=groups")
-	        .contextSource()
-	        .url(ldapUrl + ldapBaseDn)	
-	        .managerDn(response.getData().get("dn").toString())						// DN of the user who will bind to the LDAP server to perform the search
-	        .managerPassword(response.getData().get("password").toString())			// Password of the user who will bind to the LDAP server to perform the search
-	        .and()
-	        .passwordCompare()
-	        .passwordEncoder(new BCryptPasswordEncoder())
-	        .passwordAttribute("userPassword");
-		
 	}
 	
 	@Configuration

@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     private String ldapBaseDn;
     
     @Value("${ldap.user.dn.pattern}")
-    private String userDnPatter;
+    private String userDnPattern;
 
     @Autowired
 	private VaultTemplate vaultTemplate;
@@ -52,6 +52,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.mvcMatchers("/ticket/history_operatore").access("hasAuthority('ROLE_OPERATORI')")
 					.mvcMatchers("/ticket/history_aperti").access("hasAuthority('ROLE_OPERATORI')")
 					.mvcMatchers("/ticket/aggiorna_stato/*").access("hasAuthority('ROLE_OPERATORI')")
+					.mvcMatchers("/user/queue/notify").access("hasAuthority('ROLE_OPERATORI')")
+			        .mvcMatchers("/ws/**").authenticated()
 					.anyRequest().denyAll()
 					
 			        .and()
@@ -78,19 +80,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		
 		VaultResponse response = vaultTemplate.read("/openldap/static-cred/ssdgroup");
-		
+			
 		auth
 	        .ldapAuthentication()
-	        .userDnPatterns(userDnPatter)
+	        .userDnPatterns(userDnPattern)
 	        .groupSearchBase("ou=groups")
 	        .contextSource()
-	        .url(ldapUrl + ldapBaseDn)
+	        .url(ldapUrl + ldapBaseDn)	
 	        .managerDn(response.getData().get("dn").toString())						// DN of the user who will bind to the LDAP server to perform the search
 	        .managerPassword(response.getData().get("password").toString())			// Password of the user who will bind to the LDAP server to perform the search
 	        .and()
 	        .passwordCompare()
 	        .passwordEncoder(new BCryptPasswordEncoder())
 	        .passwordAttribute("userPassword");
+		
 	}
 	
 	@Configuration

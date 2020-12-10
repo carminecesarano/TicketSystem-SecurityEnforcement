@@ -29,6 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			        .mvcMatchers("/login-panel/welcome").authenticated()
 			        .mvcMatchers("/dashboard/**").authenticated()
 					.mvcMatchers("/ticket/details/*").authenticated()
+					.mvcMatchers("/user/list").access("hasAuthority('ROLE_ADMIN')")
+					.mvcMatchers("/user/profile/*").access("hasAuthority('ROLE_ADMIN')")
 					.mvcMatchers("/ticket/send").access("hasAuthority('ROLE_CLIENTI')")
 					.mvcMatchers("/ticket/history_cliente").access("hasAuthority('ROLE_CLIENTI')")
 					.mvcMatchers("/ticket/history_operatore").access("hasAuthority('ROLE_OPERATORI')")

@@ -44,7 +44,6 @@ public class Utente implements java.io.Serializable {
 		this.id = id;
 	}
 
-	
 	@Column(name = "username", nullable = false, length = 250)
 	public String getUsername() {
 		return this.username;

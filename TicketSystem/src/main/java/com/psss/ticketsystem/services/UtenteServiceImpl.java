@@ -2,6 +2,8 @@ package com.psss.ticketsystem.services;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.psss.ticketsystem.entities.Utente;
@@ -16,6 +18,11 @@ public class UtenteServiceImpl implements UtenteService{
 	@Override
 	public Utente findByUsername(String username) {
 		return utenteRepository.findByUsername(username);
+	}
+	
+	@Override
+	public List<Utente> findAllUsers() {
+		return utenteRepository.findAll();
 	}
 
 }

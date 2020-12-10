@@ -44,7 +44,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
 
   <header class="main-header">
@@ -142,6 +142,21 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU PRINCIPALE</li>
+        
+        <sec:authorize access="hasAuthority('ROLE_ADMIN')">
+        	<li class="treeview">
+	          <a href="#">
+	            <i class="fa fa-laptop"></i>
+	            <span>Utenti</span>
+	            <span class="pull-right-container">
+	              <i class="fa fa-angle-left pull-right"></i>
+	            </span>
+	          </a>
+	          <ul class="treeview-menu">
+	            <li><a href="${pageContext.request.contextPath}/user/list"><i class="fa fa-circle-o"></i> Lista Utenti</a></li>
+	          </ul>
+	        </li>
+        </sec:authorize>
         
         <sec:authorize access="hasAuthority('ROLE_CLIENTI')">
         	<li class="treeview">

@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
@@ -15,6 +17,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     
+	@Bean
+	public PasswordEncoder encoder() {
+	    return new BCryptPasswordEncoder();
+	}
+	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		
@@ -31,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.mvcMatchers("/ticket/details/*").authenticated()
 					.mvcMatchers("/user/list").access("hasAuthority('ROLE_ADMIN')")
 					.mvcMatchers("/user/profile/*").access("hasAuthority('ROLE_ADMIN')")
+					.mvcMatchers("/user/add").access("hasAuthority('ROLE_ADMIN')")
 					.mvcMatchers("/ticket/send").access("hasAuthority('ROLE_CLIENTI')")
 					.mvcMatchers("/ticket/history_cliente").access("hasAuthority('ROLE_CLIENTI')")
 					.mvcMatchers("/ticket/history_operatore").access("hasAuthority('ROLE_OPERATORI')")

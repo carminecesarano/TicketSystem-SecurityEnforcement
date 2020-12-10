@@ -44,7 +44,15 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-green sidebar-mini">
+
+<sec:authorize access="hasAuthority('ROLE_CLIENTI')">
+	<body class="hold-transition skin-black sidebar-mini">
+</sec:authorize>
+ 
+<sec:authorize access="hasAuthority('ROLE_OPERATORI')">
+	<body class="hold-transition skin-green sidebar-mini">
+</sec:authorize>
+ 
 <div class="wrapper">
 
   <header class="main-header">
@@ -154,6 +162,7 @@
 	          </a>
 	          <ul class="treeview-menu">
 	            <li><a href="${pageContext.request.contextPath}/user/list"><i class="fa fa-circle-o"></i> Lista Utenti</a></li>
+	            <li><a href="${pageContext.request.contextPath}/user/add"><i class="fa fa-circle-o"></i> Aggiungi Utente</a></li>
 	          </ul>
 	        </li>
         </sec:authorize>

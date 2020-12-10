@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.psss.ticketsystem.utils.TransitConverterUser;
 
@@ -21,15 +22,18 @@ public class Utente implements java.io.Serializable {
 	private String fullName;
 	private String email;
 	private String phone;
+	private String password;
+	private String role;
 	
 	public Utente() {
 	}
 
-	public Utente(String username, String fullName, String email, String phone) {
+	public Utente(String username, String fullName, String email, String phone, String password) {
 		this.username = username;
 		this.fullName = fullName;
 		this.email = email;
 		this.phone = phone;
+		this.password = password;
 	}
 
 	@Id
@@ -82,5 +86,22 @@ public class Utente implements java.io.Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	@Transient
+	public String getPassword() {
+		return this.password;
+	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Transient
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 }

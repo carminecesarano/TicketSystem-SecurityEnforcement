@@ -13,5 +13,9 @@
 			<put-attribute name="content" value="/WEB-INF/views/user/list.jsp"></put-attribute>
 		</definition>
 		
+		<definition name="user.add" extends="my_template">
+			<put-attribute name="content" value="/WEB-INF/views/user/add.jsp"></put-attribute>
+		</definition>
+		
 	</tiles-definitions>
 	

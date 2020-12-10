@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.ldap.core.support.BaseLdapPathBeanPostProcessor;
 import org.springframework.ldap.core.support.DefaultTlsDirContextAuthenticationStrategy;
 import org.springframework.ldap.core.support.LdapContextSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -41,7 +42,6 @@ public class LDAPAuthenticationManagerConfiguration extends GlobalAuthentication
 	        .passwordAttribute("userPassword");
     }
 
-
     @Bean
     public LdapContextSource contextSource() {
 
@@ -55,5 +55,12 @@ public class LDAPAuthenticationManagerConfiguration extends GlobalAuthentication
         contextSource.setAuthenticationStrategy(new DefaultTlsDirContextAuthenticationStrategy());
 
         return contextSource;
+    }
+    
+    @Bean
+    public BaseLdapPathBeanPostProcessor ldapPathBeanPostProcessor(){
+        BaseLdapPathBeanPostProcessor baseLdapPathBeanPostProcessor = new BaseLdapPathBeanPostProcessor();
+        baseLdapPathBeanPostProcessor.setBasePath(ldapBaseDn);
+        return baseLdapPathBeanPostProcessor;
     }
 }

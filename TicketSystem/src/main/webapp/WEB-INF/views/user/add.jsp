@@ -44,91 +44,34 @@
         <div class="col-md-12">
           <div class="box box-primary">
           
-          <!--  
-          <script type="text/javascript">
-
-			  function checkForm(form)
-			  {
-			    if(form.username.value == "") {
-			      alert("Error: Username cannot be blank!");
-			      form.username.focus();
-			      return false;
-			    }
-			    re = /^\w+$/;
-			    if(!re.test(form.username.value)) {
-			      alert("Error: Username must contain only letters, numbers and underscores!");
-			      form.username.focus();
-			      return false;
-			    }
-			
-			    if(form.pwd1.value != "" && form.pwd1.value == form.pwd2.value) {
-			      if(form.pwd1.value.length < 6) {
-			        alert("Error: Password must contain at least six characters!");
-			        form.pwd1.focus();
-			        return false;
-			      }
-			      if(form.pwd1.value == form.username.value) {
-			        alert("Error: Password must be different from Username!");
-			        form.pwd1.focus();
-			        return false;
-			      }
-			      re = /[0-9]/;
-			      if(!re.test(form.pwd1.value)) {
-			        alert("Error: password must contain at least one number (0-9)!");
-			        form.pwd1.focus();
-			        return false;
-			      }
-			      re = /[a-z]/;
-			      if(!re.test(form.pwd1.value)) {
-			        alert("Error: password must contain at least one lowercase letter (a-z)!");
-			        form.pwd1.focus();
-			        return false;
-			      }
-			      re = /[A-Z]/;
-			      if(!re.test(form.pwd1.value)) {
-			        alert("Error: password must contain at least one uppercase letter (A-Z)!");
-			        form.pwd1.focus();
-			        return false;
-			      }
-			    } else {
-			      alert("Error: Please check that you've entered and confirmed your password!");
-			      form.pwd1.focus();
-			      return false;
-			    }
-			
-			    alert("You entered a valid password: " + form.pwd1.value);
-			    return true;
-			  }
-			
-			</script>
-          -->
+          	
             <s:form method="post" modelAttribute="user" enctype="multipart/form-data"
-            		action="${pageContext.request.contextPath}/user/add" role="form">
+            		action="${pageContext.request.contextPath}/user/add" role="form" >
               <div class="box-body">
                 
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <s:input path="username" cssClass="form-control" id="username"/>
+                  <s:input path="username" cssClass="form-control" id="username" required="required" minlength="3" maxlength="15"/>
                 </div>
                 
                 <div class="form-group">
                   <label for="fullName">Full Name</label>
-                  <s:input path="fullName" cssClass="form-control" id="fullName"/>
+                  <s:input path="fullName" cssClass="form-control" id="fullName" required="required"/>
                 </div>
                                 
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <s:input path="email" cssClass="form-control" id="email"/>
+                  <s:input path="email" cssClass="form-control" id="email" required="required"/>
                 </div>
                 
                 <div class="form-group">
                   <label for="phone">Phone</label>
-                  <s:input path="phone" cssClass="form-control" id="phone"/>
+                  <s:input path="phone" cssClass="form-control" id="phone" required="required"/>
                 </div>
                 
                 <div class="form-group">
                   <label for="password">Password</label>
-                  <s:input type="password" path="password" cssClass="form-control" id="password"/>
+                  <s:input type="password" path="password" cssClass="form-control" id="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title="Please include at least 1 uppercase character, 1 lowercase character, and 1 number." minlength="8" maxlength="30" required="required"/>
                 </div>
                 
                 <div class="form-group">

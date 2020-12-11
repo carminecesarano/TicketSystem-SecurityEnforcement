@@ -13,8 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.psss.ticketsystem.utils.TransitConverterData;
+
 
 
 @Entity
@@ -25,11 +29,23 @@ public class Ticket implements java.io.Serializable {
 	private static final long serialVersionUID = 8451257540755538463L;
 	
 	private Integer id;
+	
 	private Utente operatore;
+	
 	private Utente cliente;
+	
+	@NotNull
+	@Size(min=3, max=30)
+	@Pattern(regexp = "^[\\x00-\\x7F]*$")
 	private String title;
+	
+	@NotNull
+	@Size(min=3, max=250)
+	@Pattern(regexp = "^[\\x00-\\x7F]*$")
 	private String description;
+	
 	private Date createdDate;
+	
 	private StatoTicket statoTicket;
 
 	public Ticket() {

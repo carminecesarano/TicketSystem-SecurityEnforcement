@@ -9,6 +9,8 @@ public interface UtenteService {
 	
 	public void saveLDAP(Utente utente);
 	
+	public void removeLDAP(Utente utente);
+	
 	public Utente findByUsername(String username);
 
 	public List<Utente> findAllUsers();

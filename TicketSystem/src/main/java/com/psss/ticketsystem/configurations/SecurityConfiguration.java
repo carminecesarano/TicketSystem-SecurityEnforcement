@@ -39,6 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 					.mvcMatchers("/user/list").access("hasAuthority('ROLE_ADMIN')")
 					.mvcMatchers("/user/profile/*").access("hasAuthority('ROLE_ADMIN')")
 					.mvcMatchers("/user/add").access("hasAuthority('ROLE_ADMIN')")
+					.mvcMatchers("/user/cambiaStato/*").access("hasAuthority('ROLE_ADMIN')")
 					.mvcMatchers("/ticket/send").access("hasAuthority('ROLE_CLIENTI')")
 					.mvcMatchers("/ticket/history_cliente").access("hasAuthority('ROLE_CLIENTI')")
 					.mvcMatchers("/ticket/history_operatore").access("hasAuthority('ROLE_OPERATORI')")

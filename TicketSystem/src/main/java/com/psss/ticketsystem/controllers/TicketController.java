@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletContext;
+import javax.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -81,7 +82,10 @@ public class TicketController implements ServletContextAware{
 			} else {
 				redirectAttributes.addFlashAttribute("err", "Invio del ticket fallito.");
 			}
-		} catch (Exception e) {
+		} catch (ConstraintViolationException ex) {
+			redirectAttributes.addFlashAttribute("err", "Input non valido.");
+        }
+		catch (Exception e) {
 			redirectAttributes.addFlashAttribute("err", "Invio del ticket fallito.");
 		}
 		return "redirect:/ticket/send";

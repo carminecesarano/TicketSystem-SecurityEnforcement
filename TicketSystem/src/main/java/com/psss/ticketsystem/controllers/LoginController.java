@@ -5,12 +5,22 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.psss.ticketsystem.entities.Utente;
+import com.psss.ticketsystem.services.UtenteService;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.*;
 
 @Controller
 @RequestMapping(value= {"", "login-panel"})
 public class LoginController {
 
+	@Autowired
+	private UtenteService accountService;
+	
 	@GetMapping(value = {"index"})
 	public String index() {
 		return "redirect:/login-panel/login";
@@ -51,7 +61,10 @@ public class LoginController {
 	}
 	
 	@GetMapping(value = "welcome")
-	public String welcome() {
+	public String welcome(Authentication authentication) {
+		Utente account = accountService.findByUsername(authentication.getName());
+		account.setLastLogin(new Date());
+		accountService.save(account);
 		return "redirect:/dashboard";
 	}
 	

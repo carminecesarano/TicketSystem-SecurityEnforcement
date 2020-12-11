@@ -25,6 +25,8 @@
               <th>Full Name</th>
               <th>Email</th>
               <th>Phone</th>
+              <th>Stato</th>
+              <th>Ultimo Login</th>
               <th></th>
             </tr>
             </thead>
@@ -34,7 +36,16 @@
 	                	<td>${user.username}</td>
 	                	<td>${user.fullName}</td>	
 	                	<td>${user.email}</td>	
-	                	<td>${user.phone}</td>						
+	                	<td>${user.phone}</td>
+	                	<c:choose>
+							  <c:when test="${user.status == 1}">
+							    	<td><span class="label label-success">Abilitato</span></td>
+							  </c:when>
+							  <c:when test="${user.status == 0}">
+							    	<td><span class="label label-warning">Revocato</span></td>
+							  </c:when>
+						</c:choose>	
+						<td><fmt:formatDate var="lastLogin" value="${user.lastLogin}" pattern="dd/MM/yyyy"/>${lastLogin}</td>					
 	                	<td>
 	                		<a href="${pageContext.request.contextPath}/user/profile/${user.username}">Dettagli</a>
 	                	</td>

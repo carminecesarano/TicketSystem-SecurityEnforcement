@@ -30,6 +30,11 @@ public class UtenteServiceImpl implements UtenteService{
 	}
 	
 	@Override
+	public void removeLDAP(Utente utente) {
+		utenteLdapRepository.delete(utente);
+	}
+	
+	@Override
 	public Utente findByUsername(String username) {
 		return utenteRepository.findByUsername(username);
 	}

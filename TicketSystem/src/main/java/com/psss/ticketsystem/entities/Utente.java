@@ -7,9 +7,18 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
+import java.util.Date;
 import com.psss.ticketsystem.utils.TransitConverterUser;
+import com.psss.ticketsystem.annotations.Password;
 
 @Entity
 @Table(name = "utenti")
@@ -18,22 +27,47 @@ public class Utente implements java.io.Serializable {
 	private static final long serialVersionUID = -6999018310754628005L;
 	
 	private Integer id;
+	
+	@NotNull
+	@Size(min=3, max=15)
+	@Pattern(regexp = "^[a-zA-Z0-9]*$")
 	private String username;
+	
+	@NotNull
+	@Size(min=5, max=35)
+	@Pattern(regexp = "^[a-zA-Z\\u0020]*$")
 	private String fullName;
+	
+	@Email
 	private String email;
+	
+	@NotNull
+	@Size(min=7)
+	@Digits(integer=12, fraction=0)
 	private String phone;
-	private String password;
+	
+	@NotNull
+	@Password
+	private String password = "Password.98";
+	
 	private String role;
+	
+	private Date lastLogin;
+	
+	private int status;
 	
 	public Utente() {
 	}
 
-	public Utente(String username, String fullName, String email, String phone, String password) {
+	public Utente(String username, String fullName, String email, String phone, String password, String role, Date lastLogin, int status) {
 		this.username = username;
 		this.fullName = fullName;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
+		this.role = role;
+		this.lastLogin = lastLogin;
+		this.status = status;
 	}
 
 	@Id
@@ -98,10 +132,29 @@ public class Utente implements java.io.Serializable {
 
 	@Transient
 	public String getRole() {
-		return role;
+		return this.role;
 	}
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "lastlogin", nullable = false, length = 0)
+	public Date getLastLogin() {
+		return this.lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	@Column(name = "status", nullable = false, length = 1)
+	public int getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 }

@@ -46,11 +46,15 @@
 </head>
 
 <sec:authorize access="hasAuthority('ROLE_CLIENTI')">
-	<body class="hold-transition skin-black sidebar-mini">
+	<body class="hold-transition skin-red sidebar-mini">
 </sec:authorize>
  
 <sec:authorize access="hasAuthority('ROLE_OPERATORI')">
 	<body class="hold-transition skin-green sidebar-mini">
+</sec:authorize>
+
+<sec:authorize access="hasAuthority('ROLE_ADMIN')">
+	<body class="hold-transition skin-purple sidebar-mini">
 </sec:authorize>
  
 <div class="wrapper">
@@ -58,7 +62,7 @@
   <header class="main-header">
     <a href="${pageContext.request.contextPath}/dashboard" class="logo">
       <span class="logo-mini"><b>T</b>S</span>
-      <span class="logo-lg">Ticket System PSSS</span>
+      <span class="logo-lg">Ticket System SSD</span>
     </a>
     <nav class="navbar navbar-static-top">
       <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">

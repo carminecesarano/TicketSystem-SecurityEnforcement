@@ -51,8 +51,8 @@ public class UserController implements ServletContextAware{
 		
 	@PostMapping(value= "add")
 	public String add(@ModelAttribute("user") Utente user, Authentication authentication, RedirectAttributes redirectAttributes) {
-	//	try {
-					
+		try {
+			    user.setAttempts(0);
 				user.setStatus(1);   
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
 				utenteService.saveLDAP(user);
@@ -60,12 +60,12 @@ public class UserController implements ServletContextAware{
 				
 				redirectAttributes.addFlashAttribute("success", "Utente aggiunto correttamente.");
 			
-	//	} catch (ConstraintViolationException ex) {
-	//		redirectAttributes.addFlashAttribute("err", "Input non valido.");
-   //     }
-	//	catch (Exception e) {
-	//		redirectAttributes.addFlashAttribute("err", "Aggiunta dell'utente fallita.");
-	//	} 
+		} catch (ConstraintViolationException ex) {
+			redirectAttributes.addFlashAttribute("err", "Input non valido.");
+        }
+		catch (Exception e) {
+			redirectAttributes.addFlashAttribute("err", "Aggiunta dell'utente fallita.");
+		} 
 		return "redirect:/user/add";
 	}	
 	
@@ -80,7 +80,7 @@ public class UserController implements ServletContextAware{
 	@PostMapping(value= "cambiaStato/{username}")
 	public String cambiaStato(Authentication authentication, @PathVariable("username") String username, @ModelAttribute("account") Utente utenteModel, RedirectAttributes redirectAttributes) {
 		
-	//try {
+	try {
 	
 		Utente utente = utenteService.findByUsername(utenteModel.getUsername());
 		utente.setRole(utenteModel.getRole());
@@ -106,10 +106,10 @@ public class UserController implements ServletContextAware{
 			redirectAttributes.addFlashAttribute("success", "Stato utente aggiornato.");
 			return "redirect:/user/profile/{username}";
 		
-	//	} catch (Exception e) {
-	//		redirectAttributes.addFlashAttribute("err", "Errore cambio stato.");
-	//		return "redirect:/user/profile/{username}";
-	//	}	
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("err", "Errore cambio stato.");
+			return "redirect:/user/profile/{username}";
+		}	
 		
 	}
 	

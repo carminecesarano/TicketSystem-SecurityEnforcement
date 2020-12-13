@@ -56,6 +56,8 @@ public class Utente implements java.io.Serializable {
 	
 	private int status;
 	
+	private int attempts;
+	
 	public Utente() {
 	}
 
@@ -130,7 +132,8 @@ public class Utente implements java.io.Serializable {
 		this.password = password;
 	}
 
-	@Transient
+	@Column(name = "role", nullable = false)
+//	@Convert(converter = TransitConverterUser.class)
 	public String getRole() {
 		return this.role;
 	}
@@ -156,5 +159,14 @@ public class Utente implements java.io.Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	
+	@Column(name = "attempts", nullable = false, length = 1)
+	public int getAttempts() {
+		return attempts;
+	}
+
+	public void setAttempts(int attempts) {
+		this.attempts = attempts;
 	}
 }

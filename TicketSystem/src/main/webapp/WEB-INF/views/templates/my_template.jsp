@@ -53,7 +53,7 @@
 	<body class="hold-transition skin-green sidebar-mini">
 </sec:authorize>
 
-<sec:authorize access="hasAuthority('ROLE_ADMIN')">
+<sec:authorize access="hasAuthority('ROLE_MANAGER')">
 	<body class="hold-transition skin-purple sidebar-mini">
 </sec:authorize>
  
@@ -155,7 +155,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MENU PRINCIPALE</li>
         
-        <sec:authorize access="hasAuthority('ROLE_ADMIN')">
+        <sec:authorize access="hasAuthority('ROLE_MANAGER')">
         	<li class="treeview">
 	          <a href="#">
 	            <i class="fa fa-laptop"></i>

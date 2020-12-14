@@ -17,7 +17,7 @@ public class NotificaServiceImpl implements NotificaService{
 	private NotificaRepository notificaRepository;
 	
 	//@Autowired
-	//private SimpMessagingTemplate messagingTemplate;
+	private SimpMessagingTemplate messagingTemplate;
 	
 	@Override
 	public Notifica save(Notifica notifica) {
@@ -31,7 +31,7 @@ public class NotificaServiceImpl implements NotificaService{
 	
 	@Override
 	public void notify(Notifica notifica, String username) {
-		//messagingTemplate.convertAndSendToUser(username, "/queue/notify", notifica);
+		messagingTemplate.convertAndSendToUser(username, "/queue/notify", notifica);
 	}
 
 	

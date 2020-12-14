@@ -36,10 +36,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			        .mvcMatchers("/login-panel/welcome").authenticated()
 			        .mvcMatchers("/dashboard/**").authenticated()
 					.mvcMatchers("/ticket/details/*").authenticated()
-					.mvcMatchers("/user/list").access("hasAuthority('ROLE_ADMIN')")
-					.mvcMatchers("/user/profile/*").access("hasAuthority('ROLE_ADMIN')")
-					.mvcMatchers("/user/add").access("hasAuthority('ROLE_ADMIN')")
-					.mvcMatchers("/user/cambiaStato/*").access("hasAuthority('ROLE_ADMIN')")
+					.mvcMatchers("/user/list").access("hasAuthority('ROLE_MANAGER')")
+					.mvcMatchers("/user/profile/*").access("hasAuthority('ROLE_MANAGER')")
+					.mvcMatchers("/user/add").access("hasAuthority('ROLE_MANAGER')")
+					.mvcMatchers("/user/cambiaStato/*").access("hasAuthority('ROLE_MANAGER')")
 					.mvcMatchers("/ticket/send").access("hasAuthority('ROLE_CLIENTI')")
 					.mvcMatchers("/ticket/history_cliente").access("hasAuthority('ROLE_CLIENTI')")
 					.mvcMatchers("/ticket/history_operatore").access("hasAuthority('ROLE_OPERATORI')")
@@ -66,7 +66,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		httpSecurity
 					.sessionManagement()
 					.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-					.invalidSessionUrl("/login-panel/login?expired");
+					.invalidSessionUrl("/login-panel/login?expired")
+					.maximumSessions(1)
+					.maxSessionsPreventsLogin(true);
 	}
 	
 	@Configuration
@@ -80,9 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Bean
 	public HttpSessionEventPublisher httpSessionEventPublisher() {
 	    return new HttpSessionEventPublisher();
-	}
-	
-	
+	}	
 		
 }
 

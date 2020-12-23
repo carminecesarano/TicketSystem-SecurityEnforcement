@@ -21,8 +21,9 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/public/static/dist/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/public/static/plugins/iCheck/square/blue.css">
-
-
+  <!-- Cookie Policy -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.css"/>
+  
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
@@ -80,7 +81,13 @@
 		
 	  </div>
 	  
+	<!--  Policy Popup -->  
+	<script src="https://cdn.wpcc.io/lib/1.0.2/cookieconsent.min.js" defer></script>
+	<script>window.addEventListener("load", function(){window.wpcc.init({"border":"thin","corners":"small","colors":{"popup":{"background":"#222222","text":"#ffffff","border":"#f9f9f9"},"button":{"background":"#f9f9f9","text":"#000000"}},"position":"bottom-right","content":{"href":"policy.com"}})});</script>
+	  
 	</div>
+	
+	
 	
 	
 	<!-- jQuery 3 -->

@@ -49,29 +49,29 @@
                 
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <s:input path="username" cssClass="form-control" id="username" value="${account.username}" readonly="true"/>
+                  <s:input path="username" cssClass="form-control" id="username" value="${account.username}" readonly="true" htmlEscape="true"/>
                 </div>
                 
                 <div class="form-group">
                   <label for="fullName">Full Name</label>
-                  <s:input path="fullName" cssClass="form-control" id="fullName" value="${account.fullName}"  readonly="true"/>
+                  <s:input path="fullName" cssClass="form-control" id="fullName" value="${account.fullName}"  readonly="true" htmlEscape="true"/>
                 </div>
                                 
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <s:input path="email" cssClass="form-control" id="email" value="${account.email}" readonly="true"/>
+                  <s:input path="email" cssClass="form-control" id="email" value="${account.email}" readonly="true" htmlEscape="true"/>
                 </div>
                 
                 <div class="form-group">
                   <label for="phone">Phone</label>
-                  <s:input path="phone" cssClass="form-control" id="phone" value="${account.phone}" readonly="true"/>
+                  <s:input path="phone" cssClass="form-control" id="phone" value="${account.phone}" readonly="true" htmlEscape="true"/>
                 </div>
                             
                 <c:choose>
 				<c:when test="${account.status == 1}">
 	              <div class="form-group">
                   <label for="password">Password</label>
-                  <s:input type="password" path="password" cssClass="form-control" id="password" readonly="true"/>
+                  <s:input type="password" path="password" cssClass="form-control" id="password" readonly="true" htmlEscape="true"/>
                 </div>
               	</c:when>
               	</c:choose>   
@@ -79,7 +79,7 @@
 				<c:when test="${account.status == 0}">
 	              <div class="form-group">
                   <label for="password">Password</label>
-                  <s:input type="password" path="password" cssClass="form-control" id="password"/>
+                  <s:input type="password" path="password" cssClass="form-control" id="password" htmlEscape="true"/>
                 </div>
               	</c:when>
              	</c:choose>         

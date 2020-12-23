@@ -36,12 +36,12 @@ public class Ticket implements java.io.Serializable {
 	
 	@NotNull
 	@Size(min=3, max=30)
-	@Pattern(regexp = "^[\\x00-\\x7F]*$")
+	@Pattern(regexp = "^[\\x2A-\\x3B\\x3F-\\x5A\\x61-\\x7A]*$")
 	private String title;
 	
 	@NotNull
 	@Size(min=3, max=250)
-	@Pattern(regexp = "^[\\x00-\\x7F]*$")
+	@Pattern(regexp = "^[\\x2A-\\x3B\\x3F-\\x5A\\x61-\\x7A]*$")
 	private String description;
 	
 	private Date createdDate;

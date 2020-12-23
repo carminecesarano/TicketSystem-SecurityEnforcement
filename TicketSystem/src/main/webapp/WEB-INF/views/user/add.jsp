@@ -51,27 +51,27 @@
                 
                 <div class="form-group">
                   <label for="username">Username</label>
-                  <s:input path="username" cssClass="form-control" id="username" required="required" minlength="3" maxlength="15"/>
+                  <s:input path="username" cssClass="form-control" id="username" required="required" minlength="3" maxlength="15" htmlEscape="true"/>
                 </div>
                 
                 <div class="form-group">
                   <label for="fullName">Full Name</label>
-                  <s:input path="fullName" cssClass="form-control" id="fullName" required="required"/>
+                  <s:input path="fullName" cssClass="form-control" id="fullName" required="required" htmlEscape="true"/>
                 </div>
                                 
                 <div class="form-group">
                   <label for="email">Email</label>
-                  <s:input path="email" cssClass="form-control" id="email" required="required"/>
+                  <s:input path="email" cssClass="form-control" id="email" required="required" htmlEscape="true"/>
                 </div>
                 
                 <div class="form-group">
                   <label for="phone">Phone</label>
-                  <s:input path="phone" cssClass="form-control" id="phone" required="required"/>
+                  <s:input path="phone" cssClass="form-control" id="phone" required="required" htmlEscape="true"/>
                 </div>
                 
                 <div class="form-group">
                   <label for="password">Password</label>
-                  <s:input type="password" path="password" cssClass="form-control" id="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title="Please include at least 1 uppercase character, 1 lowercase character, and 1 number." minlength="8" maxlength="30" required="required"/>
+                  <s:input type="password" path="password" cssClass="form-control" id="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$" title="Please include at least 1 uppercase character, 1 lowercase character, and 1 number." minlength="8" maxlength="30" required="required" htmlEscape="true"/>
                 </div>
                 
                 <div class="form-group">

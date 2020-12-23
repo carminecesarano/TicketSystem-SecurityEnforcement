@@ -46,12 +46,12 @@
                 
                 <div class="form-group">
                   <label for="title">Titolo</label>
-                  <s:input path="title" cssClass="form-control" id="title"/>
+                  <s:input path="title" cssClass="form-control" id="title" htmlEscape="true"/>
                 </div>
                 
                 <div class="form-group">
                   <label for="description">Descrizione</label>
-                  <s:textarea path="description" cols="20" rows="5" cssClass="form-control" id="description"/>
+                  <s:textarea path="description" cols="20" rows="5" cssClass="form-control" id="description" htmlEscape="true"/>
                 </div>
                       
               </div>
